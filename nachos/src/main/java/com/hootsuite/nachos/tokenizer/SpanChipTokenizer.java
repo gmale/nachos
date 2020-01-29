@@ -57,16 +57,16 @@ public class SpanChipTokenizer<C extends Chip> implements ChipTokenizer {
     public static final char CHIP_SPAN_SEPARATOR = 31;
     public static final char AUTOCORRECT_SEPARATOR = ' ';
 
-    private Context mContext;
+    protected Context mContext;
 
     @Nullable
-    private ChipConfiguration mChipConfiguration;
+    protected ChipConfiguration mChipConfiguration;
     @NonNull
-    private ChipCreator<C> mChipCreator;
+    protected ChipCreator<C> mChipCreator;
     @NonNull
-    private Class<C> mChipClass;
+    protected Class<C> mChipClass;
 
-    private Comparator<Pair<Integer, Integer>> mReverseTokenIndexesSorter = new Comparator<Pair<Integer, Integer>>() {
+    protected Comparator<Pair<Integer, Integer>> mReverseTokenIndexesSorter = new Comparator<Pair<Integer, Integer>>() {
         @Override
         public int compare(Pair<Integer, Integer> lhs, Pair<Integer, Integer> rhs) {
             return rhs.first - lhs.first;
@@ -167,7 +167,7 @@ public class SpanChipTokenizer<C extends Chip> implements ChipTokenizer {
         return terminateToken(mChipCreator.createChip(mContext, trimmedText, data));
     }
 
-    private CharSequence terminateToken(C chip) {
+    protected CharSequence terminateToken(C chip) {
         // Surround the text with CHIP_SPAN_SEPARATOR and spaces
         // The spaces allow autocorrect to correctly identify words
         String chipSeparator = Character.toString(CHIP_SPAN_SEPARATOR);

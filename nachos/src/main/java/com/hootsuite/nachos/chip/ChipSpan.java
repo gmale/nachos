@@ -47,40 +47,40 @@ import com.hootsuite.nachos.R;
  */
 public class ChipSpan extends ImageSpan implements Chip {
 
-    private static final float SCALE_PERCENT_OF_CHIP_HEIGHT = 0.70f;
-    private static final boolean ICON_ON_LEFT_DEFAULT = true;
+    protected static final float SCALE_PERCENT_OF_CHIP_HEIGHT = 0.70f;
+    protected static final boolean ICON_ON_LEFT_DEFAULT = true;
 
-    private int[] mStateSet = new int[]{};
+    protected int[] mStateSet = new int[]{};
 
-    private String mEllipsis;
+    protected String mEllipsis;
 
-    private ColorStateList mDefaultBackgroundColor;
-    private ColorStateList mBackgroundColor;
-    private int mTextColor;
-    private int mCornerRadius = -1;
-    private int mIconBackgroundColor;
+    protected ColorStateList mDefaultBackgroundColor;
+    protected ColorStateList mBackgroundColor;
+    protected int mTextColor;
+    protected int mCornerRadius = -1;
+    protected int mIconBackgroundColor;
 
-    private int mTextSize = -1;
-    private int mPaddingEdgePx;
-    private int mPaddingBetweenImagePx;
-    private int mLeftMarginPx;
-    private int mRightMarginPx;
-    private int mMaxAvailableWidth = -1;
+    protected int mTextSize = -1;
+    protected int mPaddingEdgePx;
+    protected int mPaddingBetweenImagePx;
+    protected int mLeftMarginPx;
+    protected int mRightMarginPx;
+    protected int mMaxAvailableWidth = -1;
 
-    private CharSequence mText;
-    private String mTextToDraw;
+    protected CharSequence mText;
+    protected String mTextToDraw;
 
-    private Drawable mIcon;
-    private boolean mShowIconOnLeft = ICON_ON_LEFT_DEFAULT;
+    protected Drawable mIcon;
+    protected boolean mShowIconOnLeft = ICON_ON_LEFT_DEFAULT;
 
-    private int mChipVerticalSpacing = 0;
-    private int mChipHeight = -1;
-    private int mChipWidth = -1;
-    private int mIconWidth;
+    protected int mChipVerticalSpacing = 0;
+    protected int mChipHeight = -1;
+    protected int mChipWidth = -1;
+    protected int mIconWidth;
 
-    private int mCachedSize = -1;
+    protected int mCachedSize = -1;
 
-    private Object mData;
+    protected Object mData;
 
     /**
      * Constructs a new ChipSpan.
@@ -315,7 +315,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         return mCachedSize;
     }
 
-    private int calculateActualWidth(Paint paint) {
+    protected int calculateActualWidth(Paint paint) {
         // Only change the text size if a text size was set
         if (mTextSize != -1) {
             paint.setTextSize(mTextSize);
@@ -351,7 +351,7 @@ public class ChipSpan extends ImageSpan implements Chip {
      * @param paint the paint whose font metrics should be adjusted
      * @param fm    the font metrics object to populate through {@link Paint#getFontMetricsInt(Paint.FontMetricsInt)}
      */
-    private void adjustFontMetrics(Paint paint, Paint.FontMetricsInt fm) {
+    protected void adjustFontMetrics(Paint paint, Paint.FontMetricsInt fm) {
         // Only actually adjust font metrics if we have a chip height set
         if (mChipHeight != -1) {
             paint.getFontMetricsInt(fm);
@@ -386,7 +386,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         }
     }
 
-    private int calculateChipHeight(int top, int bottom) {
+    protected int calculateChipHeight(int top, int bottom) {
         // If a chip height was set we can return that, otherwise calculate it from top and bottom
         return mChipHeight != -1 ? mChipHeight : bottom - top;
     }
@@ -411,7 +411,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         }
     }
 
-    private void drawBackground(Canvas canvas, float x, int top, int bottom, Paint paint) {
+    protected void drawBackground(Canvas canvas, float x, int top, int bottom, Paint paint) {
         int backgroundColor = mBackgroundColor.getColorForState(mStateSet, mBackgroundColor.getDefaultColor());
         paint.setColor(backgroundColor);
         int height = calculateChipHeight(top, bottom);
@@ -421,7 +421,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         paint.setColor(mTextColor);
     }
 
-    private void drawText(Canvas canvas, float x, int top, int bottom, Paint paint, CharSequence text) {
+    protected void drawText(Canvas canvas, float x, int top, int bottom, Paint paint, CharSequence text) {
         if (mTextSize != -1) {
             paint.setTextSize(mTextSize);
         }
@@ -445,12 +445,12 @@ public class ChipSpan extends ImageSpan implements Chip {
         canvas.drawText(text, 0, text.length(), adjustedX, adjustedY, paint);
     }
 
-    private void drawIcon(Canvas canvas, float x, int top, int bottom, Paint paint) {
+    protected void drawIcon(Canvas canvas, float x, int top, int bottom, Paint paint) {
         drawIconBackground(canvas, x, top, bottom, paint);
         drawIconBitmap(canvas, x, top, bottom, paint);
     }
 
-    private void drawIconBackground(Canvas canvas, float x, int top, int bottom, Paint paint) {
+    protected void drawIconBackground(Canvas canvas, float x, int top, int bottom, Paint paint) {
         int height = calculateChipHeight(top, bottom);
 
         paint.setColor(mIconBackgroundColor);
@@ -467,7 +467,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         paint.setColor(mTextColor);
     }
 
-    private void drawIconBitmap(Canvas canvas, float x, int top, int bottom, Paint paint) {
+    protected void drawIconBitmap(Canvas canvas, float x, int top, int bottom, Paint paint) {
         int height = calculateChipHeight(top, bottom);
 
         // Create a scaled down version of the bitmap to fit within the circle (whose diameter == height)
@@ -496,7 +496,7 @@ public class ChipSpan extends ImageSpan implements Chip {
         canvas.drawBitmap(scaledIconBitMap, iconX, iconY, paint);
     }
 
-    private Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
+    protected Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
         float ratio = Math.min(maxImageSize / realImage.getWidth(), maxImageSize / realImage.getHeight());
         int width = Math.round(ratio * realImage.getWidth());
         int height = Math.round(ratio * realImage.getHeight());
